@@ -66,11 +66,11 @@ const StyledOutlinedInput = styled(OutlinedInput)`
 `;
 
 export function TrackContainer({
-  dispatchGithubRepos,
-  dispatchClearGithubRepos,
-  reposData,
-  reposError,
-  repoName,
+  dispatchItunesTracks,
+  dispatchClearItunesTracks,
+  tracksData,
+  tracksError,
+  trackName,
   maxwidth,
   padding
 }) {
@@ -78,21 +78,21 @@ export function TrackContainer({
   const history = useHistory();
 
   useEffect(() => {
-    const loaded = get(reposData, 'items', null) || reposError;
+    const loaded = get(tracksData, 'results', null) || tracksError;
     if (loaded) {
       setLoading(false);
     }
-  }, [reposData]);
+  }, [tracksData]);
 
   useEffect(() => {
-    if (repoName && !reposData?.items?.length) {
-      dispatchGithubRepos(repoName);
+    if (trackName && !tracksData?.results?.length) {
+      dispatchItunesTracks(trackName);
       setLoading(true);
     }
   }, []);
 
   const searchRepos = (rName) => {
-    dispatchGithubRepos(rName);
+    dispatchItunesTracks(rName);
     setLoading(true);
   };
 
@@ -100,7 +100,7 @@ export function TrackContainer({
     if (!isEmpty(rName)) {
       searchRepos(rName);
     } else {
-      dispatchClearGithubRepos();
+      dispatchClearItunesTracks();
     }
   };
   const debouncedHandleOnChange = debounce(handleOnChange, 200);
@@ -116,25 +116,25 @@ export function TrackContainer({
   };
 
   const renderRepoList = () => {
-    const items = get(reposData, 'items', []);
-    const totalCount = get(reposData, 'totalCount', 0);
+    const results = get(tracksData, 'results', []);
+    const resultCount = get(tracksData, 'resultCount', 0);
     return (
-      <If condition={!isEmpty(items) || loading}>
+      <If condition={!isEmpty(results) || loading}>
         <CustomCard>
           <If condition={!loading} otherwise={renderSkeleton()}>
             <>
-              <If condition={!isEmpty(repoName)}>
+              <If condition={!isEmpty(trackName)}>
                 <div>
-                  <T id="search_query" values={{ repoName }} />
+                  <T id="search_query" values={{ trackName }} />
                 </div>
               </If>
-              <If condition={totalCount !== 0}>
+              <If condition={resultCount !== 0}>
                 <div>
-                  <T id="matching_repos" values={{ totalCount }} />
+                  <T id="matching_tracks" values={{ resultCount }} />
                 </div>
               </If>
               <For
-                of={items}
+                of={results}
                 ParentComponent={Container}
                 renderItem={(item, index) => <RepoCard key={index} {...item} />}
               />
@@ -145,20 +145,20 @@ export function TrackContainer({
     );
   };
   const renderErrorState = () => {
-    let repoError;
-    if (reposError) {
-      repoError = reposError;
-    } else if (isEmpty(repoName)) {
-      repoError = 'repo_search_default';
+    let trackError;
+    if (tracksError) {
+      trackError = tracksError;
+    } else if (isEmpty(trackName)) {
+      trackError = 'track_search_default';
     }
     return (
       !loading &&
-      repoError && (
-        <CustomCard color={reposError ? 'red' : 'grey'}>
-          <CustomCardHeader title={translate('repo_list')} />
+      trackError && (
+        <CustomCard color={tracksError ? 'red' : 'grey'}>
+          <CustomCardHeader title={translate('track_list')} />
           <Divider sx={{ mb: 1.25 }} light />
-          <If condition={reposError} otherwise={<T data-testid="default-message" id={repoError} />}>
-            <T data-testid="error-message" text={reposError} />
+          <If condition={tracksError} otherwise={<T data-testid="default-message" id={trackError} />}>
+            <T data-testid="error-message" text={tracksError} />
           </If>
         </CustomCard>
       )
@@ -176,21 +176,21 @@ export function TrackContainer({
         <StyledT onClick={handleStoriesClick} data-testid="redirect" id="stories" />
       </RightContent>
       <CustomCard maxwidth={maxwidth}>
-        <CustomCardHeader title={translate('repo_search')} />
+        <CustomCardHeader title={translate('track_search')} />
         <Divider sx={{ mb: 1.25 }} light />
-        <T marginBottom={10} id="get_repo_details" />
+        <T marginBottom={10} id="get_track_details" />
         <StyledOutlinedInput
           inputProps={{ 'data-testid': 'search-bar' }}
           onChange={(event) => debouncedHandleOnChange(event.target.value)}
           fullWidth
-          defaultValue={repoName}
+          defaultValue={trackName}
           endAdornment={
             <InputAdornment position="end">
               <IconButton
                 data-testid="search-icon"
-                aria-label="search repos"
+                aria-label="search tracks"
                 type="button"
-                onClick={() => searchRepos(repoName)}
+                onClick={() => searchRepos(trackName)}
               >
                 <SearchIcon />
               </IconButton>
@@ -205,16 +205,15 @@ export function TrackContainer({
 }
 
 TrackContainer.propTypes = {
-  dispatchGithubRepos: PropTypes.func,
-  dispatchClearGithubRepos: PropTypes.func,
+  dispatchItunesTracks: PropTypes.func,
+  dispatchClearItunesTracks: PropTypes.func,
   intl: PropTypes.object,
-  reposData: PropTypes.shape({
-    totalCount: PropTypes.number,
-    incompleteResults: PropTypes.bool,
-    items: PropTypes.array
+  tracksData: PropTypes.shape({
+    resultCount: PropTypes.number,
+    results: PropTypes.array
   }),
-  reposError: PropTypes.string,
-  repoName: PropTypes.string,
+  tracksError: PropTypes.string,
+  trackName: PropTypes.string,
   history: PropTypes.object,
   maxwidth: PropTypes.number,
   padding: PropTypes.number
@@ -223,21 +222,21 @@ TrackContainer.propTypes = {
 TrackContainer.defaultProps = {
   maxwidth: 500,
   padding: 20,
-  reposData: {},
-  reposError: null
+  tracksData: {},
+  tracksError: null
 };
 
 const mapStateToProps = createStructuredSelector({
-  reposData: selectReposData(),
-  reposError: selectReposError(),
-  repoName: selectRepoName()
+  tracksData: selectReposData(),
+  tracksError: selectReposError(),
+  trackName: selectRepoName()
 });
 
 export function mapDispatchToProps(dispatch) {
-  const { requestGetGithubRepos, clearGithubRepos } = trackContainerCreators;
+  const { requestGetItunesTracks, clearItunesTracks } = trackContainerCreators;
   return {
-    dispatchGithubRepos: (repoName) => dispatch(requestGetGithubRepos(repoName)),
-    dispatchClearGithubRepos: () => dispatch(clearGithubRepos())
+    dispatchItunesTracks: (trackName) => dispatch(requestGetItunesTracks(trackName)),
+    dispatchClearItunesTracks: () => dispatch(clearItunesTracks())
   };
 }
 

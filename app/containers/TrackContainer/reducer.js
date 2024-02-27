@@ -8,30 +8,30 @@ import { createActions } from 'reduxsauce';
 import get from 'lodash/get';
 
 export const { Types: trackContainerTypes, Creators: trackContainerCreators } = createActions({
-  requestGetGithubRepos: ['repoName'],
-  successGetGithubRepos: ['data'],
-  failureGetGithubRepos: ['error'],
-  clearGithubRepos: {}
+  requestGetItunesTracks: ['trackName'],
+  successGetItunesTracks: ['data'],
+  failureGetItunesTracks: ['error'],
+  clearItunesTracks: {}
 });
-export const initialState = { repoName: null, reposData: {}, reposError: null };
+export const initialState = { trackName: null, tracksData: {}, tracksError: null };
 
 /* eslint-disable default-case, no-param-reassign */
 export const trackContainerReducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
-      case trackContainerTypes.REQUEST_GET_GITHUB_REPOS:
-        draft.repoName = action.repoName;
+      case trackContainerTypes.REQUEST_GET_ITUNES_TRACKS:
+        draft.trackName = action.trackName;
         break;
-      case trackContainerTypes.CLEAR_GITHUB_REPOS:
-        draft.repoName = null;
-        draft.reposError = null;
-        draft.reposData = {};
+      case trackContainerTypes.CLEAR_ITUNES_TRACKS:
+        draft.trackName = null;
+        draft.tracksError = null;
+        draft.tracksData = {};
         break;
-      case trackContainerTypes.SUCCESS_GET_GITHUB_REPOS:
-        draft.reposData = action.data;
+      case trackContainerTypes.SUCCESS_GET_ITUNES_TRACKS:
+        draft.tracksData = action.data;
         break;
-      case trackContainerTypes.FAILURE_GET_GITHUB_REPOS:
-        draft.reposError = get(action.error, 'message', 'something_went_wrong');
+      case trackContainerTypes.FAILURE_GET_ITUNES_TRACKS:
+        draft.tracksError = get(action.error, 'message', 'something_went_wrong');
         break;
     }
   });

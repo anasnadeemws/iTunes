@@ -1,19 +1,19 @@
 import { put, call, takeLatest } from 'redux-saga/effects';
-import { getRepos } from '@services/repoApi';
+import { getRepos } from '@services/trackApi';
 import { trackContainerTypes, trackContainerCreators } from './reducer';
 
-const { REQUEST_GET_GITHUB_REPOS } = trackContainerTypes;
-const { successGetGithubRepos, failureGetGithubRepos } = trackContainerCreators;
-export function* getGithubRepos(action) {
-  const response = yield call(getRepos, action.repoName);
+const { REQUEST_GET_ITUNES_TRACKS } = trackContainerTypes;
+const { successGetItunesTracks, failureGetItunesTracks } = trackContainerCreators;
+export function* getItunesTracks(action) {
+  const response = yield call(getRepos, action.trackName);
   const { data, ok } = response;
   if (ok) {
-    yield put(successGetGithubRepos(data));
+    yield put(successGetItunesTracks(data));
   } else {
-    yield put(failureGetGithubRepos(data));
+    yield put(failureGetItunesTracks(data));
   }
 }
 // Individual exports for testing
 export default function* trackContainerSaga() {
-  yield takeLatest(REQUEST_GET_GITHUB_REPOS, getGithubRepos);
+  yield takeLatest(REQUEST_GET_ITUNES_TRACKS, getItunesTracks);
 }

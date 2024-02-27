@@ -2,36 +2,36 @@ import { selecttrackContainerDomain, selectRepoName, selectReposData, selectRepo
 import { initialState } from '../reducer';
 describe('TrackContainer selector tests', () => {
   let mockedState;
-  let repoName;
-  let reposData;
-  let reposError;
+  let trackName;
+  let tracksData;
+  let tracksError;
 
   beforeEach(() => {
-    repoName = 'mac';
-    reposData = { totalCount: 1, items: [{ repoName }] };
-    reposError = 'There was some error while fetching the repository details';
+    trackName = 'mac';
+    tracksData = { totalCount: 1, items: [{ trackName }] };
+    tracksError = 'There was some error while fetching the tracksitory details';
 
     mockedState = {
       trackContainer: {
-        repoName,
-        reposData,
-        reposError
+        trackName,
+        tracksData,
+        tracksError
       }
     };
   });
-  it('should select the repoName', () => {
-    const repoSelector = selectRepoName();
-    expect(repoSelector(mockedState)).toEqual(repoName);
+  it('should select the trackName', () => {
+    const trackSelector = selectRepoName();
+    expect(trackSelector(mockedState)).toEqual(trackName);
   });
 
-  it('should select reposData', () => {
-    const reposDataSelector = selectReposData();
-    expect(reposDataSelector(mockedState)).toEqual(reposData);
+  it('should select tracksData', () => {
+    const tracksDataSelector = selectReposData();
+    expect(tracksDataSelector(mockedState)).toEqual(tracksData);
   });
 
-  it('should select the reposError', () => {
-    const reposErrorSelector = selectReposError();
-    expect(reposErrorSelector(mockedState)).toEqual(reposError);
+  it('should select the tracksError', () => {
+    const tracksErrorSelector = selectReposError();
+    expect(tracksErrorSelector(mockedState)).toEqual(tracksError);
   });
 
   it('should select the global state', () => {

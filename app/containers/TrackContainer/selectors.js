@@ -17,9 +17,9 @@ export const selecttrackContainerDomain = (state) => state.trackContainer || ini
  */
 
 export const selectReposData = () =>
-  createSelector(selecttrackContainerDomain, (substate) => get(substate, 'reposData'));
+  createSelector(selecttrackContainerDomain, (substate) => get(substate, 'tracksData'));
 
 export const selectReposError = () =>
-  createSelector(selecttrackContainerDomain, (substate) => get(substate, 'reposError'));
+  createSelector(selecttrackContainerDomain, (substate) => get(substate, 'tracksError'));
 
-export const selectRepoName = () => createSelector(selecttrackContainerDomain, (substate) => get(substate, 'repoName'));
+export const selectRepoName = () => createSelector(selecttrackContainerDomain, (substate) => get(substate, 'trackName'));
