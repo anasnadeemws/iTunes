@@ -14,7 +14,7 @@ import { useHistory } from 'react-router-dom';
 import T from '@components/T';
 import If from '@components/If';
 import For from '@components/For';
-import RepoCard from '@components/RepoCard';
+import TrackCard from '@components/TrackCard';
 import colors from '@app/themes/colors';
 import { selectReposData, selectReposError, selectRepoName } from './selectors';
 import { trackContainerCreators } from './reducer';
@@ -30,6 +30,14 @@ const CustomCard = styled(Card)`
     ${(props) => props.color && `color: ${props.color}`};
   }
 `;
+const TrackResultsContainer = styled(Card)`
+  && {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+`;
 const CustomCardHeader = styled(CardHeader)`
   && {
     padding: 0;
@@ -39,7 +47,6 @@ const Container = styled.div`
   && {
     display: flex;
     flex-direction: column;
-    max-width: ${(props) => props.maxwidth}px;
     width: 100%;
     margin: 0 auto;
     padding: ${(props) => props.padding}px;
@@ -135,8 +142,8 @@ export function TrackContainer({
               </If>
               <For
                 of={results}
-                ParentComponent={Container}
-                renderItem={(item, index) => <RepoCard key={index} {...item} />}
+                ParentComponent={TrackResultsContainer}
+                renderItem={(item, index) => <TrackCard key={index} {...item} />}
               />
             </>
           </If>
@@ -171,7 +178,7 @@ export function TrackContainer({
   };
 
   return (
-    <Container maxwidth={maxwidth} padding={padding}>
+    <Container padding={padding}>
       <RightContent>
         <StyledT onClick={handleStoriesClick} data-testid="redirect" id="stories" />
       </RightContent>
