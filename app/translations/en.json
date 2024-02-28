@@ -17,8 +17,6 @@
   "track_search": "Track Search",
   "track_search_default": "Search for a track by entering it's name in the search box",
   "track_artist_name": "Artist name: {artistName}",
-  "track_id": "Track Id: {trackId}",
-  "track_id_unavailable": "Track id is unavaiable",
   "track_artist_name_unavailable": "Track name is unavailable",
   "track_shortdesc": "Description: {desc}",
   "track_shortdesc_unavailable": "Description unavaiable",

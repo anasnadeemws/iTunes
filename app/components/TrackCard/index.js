@@ -6,57 +6,34 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from '@emotion/styled';
 import { Card } from '@mui/material';
 import T from '@components/T';
 import If from '@components/If';
 import isEmpty from 'lodash/isEmpty';
-import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import SkipNextIcon from '@mui/icons-material/SkipNext';
 
-const CustomCard = styled(Card)`
-  && {
-    margin: 1rem 0;
-    padding: 1rem;
-    max-width: 12rem;
-  }
-`;
-
-export function TrackCard({ trackId, collectionName, artistName, shortDescription, artworkUrl100 }) {
-  const theme = useTheme();
+export function TrackCard({ collectionName, artistName, shortDescription, artworkUrl100 }) {
   return (
-    // <CustomCard data-testid="track-card">
-    //   <If
-    //     condition={!isEmpty(artistName)}
-    //     otherwise={<T data-testid="track_artist_name_unavailable" id="track_artist_name_unavailable" />}
-    //   >
-    //     <T data-testid="artistName" id="track_artist_name" values={{ artistName: artistName }} />
-    //   </If>
-    //   <If
-    //     condition={trackId}
-    //     otherwise={<T data-testid="track_id_unavailable" id="track_id_unavailable" />}
-    //   >
-    //     <T data-testid="trackId" id="track_id" values={{ trackId: trackId }} />
-    //   </If>
-    // </CustomCard>
     <Card
       sx={{
         display: 'flex',
         margin: '1rem',
         width: '32rem',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        ':hover': {
+          boxShadow: 5
+        },
+        transition: 'all .25s linear'
       }}
     >
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <CardContent sx={{ flex: '1 0 auto' }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', pb: 1 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', pb: 1 }}>
             <IconButton aria-label="play/pause">
               <PlayArrowIcon sx={{ height: 32, width: 32 }} />
             </IconButton>
@@ -65,7 +42,12 @@ export function TrackCard({ trackId, collectionName, artistName, shortDescriptio
             </Typography>
           </Box>
           <Typography variant="subtitle1" color="text.secondary" component="div">
-            <T data-testid="track_artist_name" id="track_artist_name" values={{ artistName: artistName }} />
+            <If
+              condition={!isEmpty(artistName)}
+              otherwise={<T data-testid="track_artist_name_unavailable" id="track_artist_name_unavailable" />}
+            >
+              <T data-testid="artistName" id="track_artist_name" values={{ artistName: artistName }} />
+            </If>
           </Typography>
           <If
             condition={!isEmpty(shortDescription)}
@@ -82,7 +64,6 @@ export function TrackCard({ trackId, collectionName, artistName, shortDescriptio
 
 TrackCard.propTypes = {
   artistName: PropTypes.string,
-  trackId: PropTypes.number,
   artworkUrl100: PropTypes.string,
   collectionName: PropTypes.string,
   shortDescription: PropTypes.string
