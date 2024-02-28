@@ -4,7 +4,7 @@
 
 /* eslint-disable redux-saga/yield-effects */
 import { takeLatest, call, put } from 'redux-saga/effects';
-import { getRepos } from '@services/trackApi';
+import { getTracks } from '@services/trackApi';
 import { apiResponseGenerator } from '@utils/testUtils';
 import trackContainerSaga, { getItunesTracks } from '../saga';
 import { trackContainerTypes } from '../reducer';
@@ -20,7 +20,7 @@ describe('TrackContainer saga tests', () => {
 
   it('should ensure that the action FAILURE_GET_ITUNES_TRACKS is dispatched when the api call fails', () => {
     const res = getItunesTracksGenerator.next().value;
-    expect(res).toEqual(call(getRepos, trackName));
+    expect(res).toEqual(call(getTracks, trackName));
     const errorResponse = {
       errorMessage: 'There was an error while fetching track informations.'
     };
@@ -35,7 +35,7 @@ describe('TrackContainer saga tests', () => {
   it('should ensure that the action SUCCESS_GET_ITUNES_TRACKS is dispatched when the api call succeeds', () => {
     getItunesTracksGenerator = getItunesTracks({ trackName });
     const res = getItunesTracksGenerator.next().value;
-    expect(res).toEqual(call(getRepos, trackName));
+    expect(res).toEqual(call(getTracks, trackName));
     const tracksResponse = {
       totalCount: 1,
       items: [{ tracksitoryName: trackName }]
