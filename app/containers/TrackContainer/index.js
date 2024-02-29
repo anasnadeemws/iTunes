@@ -16,7 +16,7 @@ import If from '@components/If';
 import For from '@components/For';
 import TrackCard from '@components/TrackCard';
 import colors from '@app/themes/colors';
-import { selectReposData, selectReposError, selectRepoName, selectRepoLoading } from './selectors';
+import { selectTracksData, selectTracksError, selectTrackName, selectTrackLoading } from './selectors';
 import { trackContainerCreators } from './reducer';
 import trackContainerSaga from './saga';
 import { translate } from '@app/utils/index';
@@ -113,7 +113,7 @@ export function TrackContainer({
     );
   };
 
-  const renderRepoList = () => {
+  const renderTrackList = () => {
     const results = get(tracksData, 'results', []);
     const resultCount = get(tracksData, 'resultCount', 0);
     return (
@@ -197,7 +197,7 @@ export function TrackContainer({
           }
         />
       </CustomCard>
-      {renderRepoList()}
+      {renderTrackList()}
       {renderErrorState()}
     </Container>
   );
@@ -228,10 +228,10 @@ TrackContainer.defaultProps = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  tracksData: selectReposData(),
-  tracksError: selectReposError(),
-  trackName: selectRepoName(),
-  loading: selectRepoLoading()
+  tracksData: selectTracksData(),
+  tracksError: selectTracksError(),
+  trackName: selectTrackName(),
+  loading: selectTrackLoading()
 });
 
 export function mapDispatchToProps(dispatch) {

@@ -6,7 +6,7 @@ import { initialState } from './reducer';
  * Direct selector to the trackContainer state domain
  */
 
-export const selecttrackContainerDomain = (state) => state.trackContainer || initialState;
+export const selectTrackContainerDomain = (state) => state.trackContainer || initialState;
 
 /**
  * Other specific selectors
@@ -16,14 +16,14 @@ export const selecttrackContainerDomain = (state) => state.trackContainer || ini
  * Default selector used by TrackContainer
  */
 
-export const selectReposData = () =>
-  createSelector(selecttrackContainerDomain, (substate) => get(substate, 'tracksData'));
+export const selectTracksData = () =>
+  createSelector(selectTrackContainerDomain, (substate) => get(substate, 'tracksData'));
 
-export const selectReposError = () =>
-  createSelector(selecttrackContainerDomain, (substate) => get(substate, 'tracksError'));
+export const selectTracksError = () =>
+  createSelector(selectTrackContainerDomain, (substate) => get(substate, 'tracksError'));
 
-export const selectRepoName = () =>
-  createSelector(selecttrackContainerDomain, (substate) => get(substate, 'trackName'));
+export const selectTrackName = () =>
+  createSelector(selectTrackContainerDomain, (substate) => get(substate, 'trackName'));
 
-export const selectRepoLoading = () =>
-  createSelector(selecttrackContainerDomain, (substate) => get(substate, 'loading'));
+export const selectTrackLoading = () =>
+  createSelector(selectTrackContainerDomain, (substate) => get(substate, 'loading'));
