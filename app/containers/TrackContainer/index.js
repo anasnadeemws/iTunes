@@ -250,4 +250,4 @@ export default compose(
   injectSaga({ key: 'trackContainer', saga: trackContainerSaga })
 )(TrackContainer);
 
-export const trackContainerTest = compose()(TrackContainer);
+export const TrackContainerTest = compose()(TrackContainer);
