@@ -216,7 +216,7 @@ TrackContainer.propTypes = {
   history: PropTypes.object,
   maxwidth: PropTypes.number,
   padding: PropTypes.number,
-  loading: PropTypes.boolean
+  loading: PropTypes.bool
 };
 
 TrackContainer.defaultProps = {

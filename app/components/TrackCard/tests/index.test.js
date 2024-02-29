@@ -1,7 +1,7 @@
 /**
  *
  * Tests for TrackCard
- *
+ *s
  */
 
 import React from 'react';
@@ -17,19 +17,25 @@ describe('<TrackCard />', () => {
 
   it('should contain 1 TrackCard component', () => {
     const { getAllByTestId } = renderWithIntl(<TrackCard />);
-    expect(getAllByTestId('repo-card').length).toBe(1);
+    expect(getAllByTestId('track-card').length).toBe(1);
   });
 
-  it('should render the repository details inside the card', () => {
-    const repoName = 'react-template';
-    const fullName = 'wednesday-solutions/react-template';
-    const stargazersCount = 200;
+  it('should render the track details inside the card', () => {
+    const collectionName = 'Sunflower';
+    const artistName = 'Post Malone';
+    const shortDescription = '';
+    const artworkUrl100 = 'https://someurl.com';
+    const previewUrl = '';
     const { getByTestId } = renderWithIntl(
-      <TrackCard name={repoName} fullName={fullName} stargazersCount={stargazersCount} />
+      <TrackCard
+        collectionName={collectionName}
+        artistName={artistName}
+        shortDescription={shortDescription}
+        artworkUrl100={artworkUrl100}
+        previewUrl={previewUrl}
+      />
     );
-    expect(getByTestId('name')).toHaveTextContent(repoName);
-    expect(getByTestId('fullName')).toHaveTextContent(fullName);
-    expect(getByTestId('stargazers')).toHaveTextContent(stargazersCount);
+    expect(getByTestId('collectionName')).toHaveTextContent(collectionName);
   });
 
   it('should render the repository unavailable messages in case any props are unavailable or have falsy values', () => {

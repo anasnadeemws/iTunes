@@ -12,7 +12,6 @@ import T from '@components/T';
 import If from '@components/If';
 import isEmpty from 'lodash/isEmpty';
 import Box from '@mui/material/Box';
-import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
@@ -36,6 +35,7 @@ const TrackContentBox = styled(Box)`
   && {
     display: flex;
     flex-direction: column;
+    padding: 1rem;
   }
 `;
 
@@ -69,42 +69,53 @@ const TrackPlayIcon = styled(PlayArrowIcon)`
 
 export function TrackCard({ collectionName, artistName, shortDescription, artworkUrl100, previewUrl }) {
   const [playTrack, setPlayTrack] = useState(false);
-  const shortDesc =
-    shortDescription && shortDescription.length > 38 ? `${shortDescription.substring(0, 38)}...` : shortDescription;
+
+  // Helpers
+  const truncateWord = (word, truncateLen) => {
+    if (!word) {
+      return '';
+    }
+    return word.length > truncateLen ? `${word.substring(0, truncateLen)}...` : word;
+  };
 
   return (
-    <TrackCustomCard>
+    <TrackCustomCard data-testid="track-card">
       <TrackContentBox>
-        <CardContent>
-          <TrackContentHeaderBox>
-            <If condition={!isEmpty(previewUrl)}>
-              <IconButton aria-label="play/pause" onClick={() => setPlayTrack(!playTrack)}>
-                <If condition={playTrack} otherwise={<TrackPlayIcon />}>
-                  <TrackPauseIcon />
-                </If>
-              </IconButton>
-            </If>
-            <Typography component="div" variant="h5">
-              {collectionName && collectionName.length > 18 ? `${collectionName.substring(0, 18)}...` : collectionName}
-            </Typography>
-          </TrackContentHeaderBox>
-          <Typography variant="subtitle1" color="text.secondary" component="div">
+        <TrackContentHeaderBox>
+          <If condition={!isEmpty(previewUrl)}>
+            <IconButton aria-label="play/pause" onClick={() => setPlayTrack(!playTrack)}>
+              <If condition={playTrack} otherwise={<TrackPlayIcon />}>
+                <TrackPauseIcon />
+              </If>
+            </IconButton>
+          </If>
+          <Typography component="div" variant="h5">
             <If
-              condition={!isEmpty(artistName)}
-              otherwise={<T data-testid="track_artist_name_unavailable" id="track_artist_name_unavailable" />}
+              condition={!isEmpty(collectionName)}
+              otherwise={<T data-testid="collection_name_unavailable" id="collection_name_unavailable" />}
             >
-              <T data-testid="artistName" id="track_artist_name" values={{ artistName: artistName }} />
+              <T data-testid="collectionName" id="collection_name" values={{ collectionName: collectionName }} />
             </If>
           </Typography>
+        </TrackContentHeaderBox>
+        <Typography variant="subtitle1" color="text.secondary" component="div">
           <If
-            condition={!isEmpty(shortDescription)}
-            otherwise={<T data-testid="track_shortdesc_unavailable" id="track_shortdesc_unavailable" />}
+            condition={!isEmpty(artistName)}
+            otherwise={<T data-testid="track_artist_name_unavailable" id="track_artist_name_unavailable" />}
           >
-            <T data-testid="track_shortdesc" id="track_shortdesc" values={{ desc: shortDesc }} />
+            <T data-testid="artistName" id="track_artist_name" values={{ artistName: artistName }} />
           </If>
-        </CardContent>
+        </Typography>
+        <If
+          condition={!isEmpty(shortDescription)}
+          otherwise={<T data-testid="track_shortdesc_unavailable" id="track_shortdesc_unavailable" />}
+        >
+          <T data-testid="track_shortdesc" id="track_shortdesc" values={{ desc: truncateWord(shortDescription, 38) }} />
+        </If>
       </TrackContentBox>
-      <TrackMedia component="img" image={artworkUrl100} alt={collectionName} />
+      <If condition={!isEmpty(artworkUrl100)}>
+        <TrackMedia component="img" image={artworkUrl100} alt="Poster unavailable" />
+      </If>
       <If condition={playTrack}>
         <audio autoPlay name="media">
           <source src={previewUrl} />
