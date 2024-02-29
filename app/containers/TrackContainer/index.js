@@ -1,4 +1,4 @@
-import React, { useEffect, memo, useState } from 'react';
+import React, { useEffect, memo } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -16,11 +16,12 @@ import If from '@components/If';
 import For from '@components/For';
 import TrackCard from '@components/TrackCard';
 import colors from '@app/themes/colors';
-import { selectReposData, selectReposError, selectRepoName } from './selectors';
+import { selectReposData, selectReposError, selectRepoName, selectRepoLoading } from './selectors';
 import { trackContainerCreators } from './reducer';
 import trackContainerSaga from './saga';
 import { translate } from '@app/utils/index';
 
+// Custom Styling
 const CustomCard = styled(Card)`
   && {
     margin: 1.25rem 0;
@@ -56,13 +57,11 @@ const RightContent = styled.div`
   display: flex;
   align-self: flex-end;
 `;
-
 const StyledT = styled(T)`
   && {
     color: ${colors.gotoStories};
   }
 `;
-
 const StyledOutlinedInput = styled(OutlinedInput)`
   legend {
     display: none;
@@ -79,37 +78,29 @@ export function TrackContainer({
   tracksError,
   trackName,
   maxwidth,
-  padding
+  padding,
+  loading
 }) {
-  const [loading, setLoading] = useState(false);
   const history = useHistory();
-
-  useEffect(() => {
-    const loaded = get(tracksData, 'results', null) || tracksError;
-    if (loaded) {
-      setLoading(false);
-    }
-  }, [tracksData]);
 
   useEffect(() => {
     if (trackName && !tracksData?.results?.length) {
       dispatchItunesTracks(trackName);
-      setLoading(true);
     }
   }, []);
 
-  const searchRepos = (rName) => {
-    dispatchItunesTracks(rName);
-    setLoading(true);
+  const searchTracks = (tName) => {
+    dispatchItunesTracks(tName);
   };
 
-  const handleOnChange = (rName) => {
-    if (!isEmpty(rName)) {
-      searchRepos(rName);
+  const handleOnChange = (tName) => {
+    if (!isEmpty(tName)) {
+      searchTracks(tName);
     } else {
       dispatchClearItunesTracks();
     }
   };
+
   const debouncedHandleOnChange = debounce(handleOnChange, 200);
 
   const renderSkeleton = () => {
@@ -151,6 +142,7 @@ export function TrackContainer({
       </If>
     );
   };
+
   const renderErrorState = () => {
     let trackError;
     if (tracksError) {
@@ -197,7 +189,7 @@ export function TrackContainer({
                 data-testid="search-icon"
                 aria-label="search tracks"
                 type="button"
-                onClick={() => searchRepos(trackName)}
+                onClick={() => searchTracks(trackName)}
               >
                 <SearchIcon />
               </IconButton>
@@ -223,20 +215,23 @@ TrackContainer.propTypes = {
   trackName: PropTypes.string,
   history: PropTypes.object,
   maxwidth: PropTypes.number,
-  padding: PropTypes.number
+  padding: PropTypes.number,
+  loading: PropTypes.boolean
 };
 
 TrackContainer.defaultProps = {
   maxwidth: 500,
   padding: 20,
   tracksData: {},
-  tracksError: null
+  tracksError: null,
+  loading: false
 };
 
 const mapStateToProps = createStructuredSelector({
   tracksData: selectReposData(),
   tracksError: selectReposError(),
-  trackName: selectRepoName()
+  trackName: selectRepoName(),
+  loading: selectRepoLoading()
 });
 
 export function mapDispatchToProps(dispatch) {

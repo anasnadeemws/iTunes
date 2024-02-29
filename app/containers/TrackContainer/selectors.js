@@ -22,4 +22,8 @@ export const selectReposData = () =>
 export const selectReposError = () =>
   createSelector(selecttrackContainerDomain, (substate) => get(substate, 'tracksError'));
 
-export const selectRepoName = () => createSelector(selecttrackContainerDomain, (substate) => get(substate, 'trackName'));
+export const selectRepoName = () =>
+  createSelector(selecttrackContainerDomain, (substate) => get(substate, 'trackName'));
+
+export const selectRepoLoading = () =>
+  createSelector(selecttrackContainerDomain, (substate) => get(substate, 'loading'));

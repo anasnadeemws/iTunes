@@ -7,6 +7,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Card } from '@mui/material';
+import styled from '@emotion/styled';
 import T from '@components/T';
 import If from '@components/If';
 import isEmpty from 'lodash/isEmpty';
@@ -18,38 +19,75 @@ import Typography from '@mui/material/Typography';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
 
+const TrackCustomCard = styled(Card)`
+  && {
+    display: flex;
+    margin: 1rem;
+    width: 32rem;
+    justify-content: space-between;
+    :hover {
+      box-shadow: 5;
+    }
+    transition: all 0.25s linear;
+  }
+`;
+
+const TrackContentBox = styled(Box)`
+  && {
+    display: flex;
+    flex-direction: column;
+  }
+`;
+
+const TrackMedia = styled(CardMedia)`
+  && {
+    width: 10rem;
+  }
+`;
+
+const TrackContentHeaderBox = styled(TrackContentBox)`
+  && {
+    flex-direction: row;
+    align-items: center;
+    padding-bottom: 1rem;
+  }
+`;
+
+const TrackPauseIcon = styled(PauseIcon)`
+  && {
+    height: 2rem;
+    width: 2rem;
+  }
+`;
+
+const TrackPlayIcon = styled(PlayArrowIcon)`
+  && {
+    height: 2rem;
+    width: 2rem;
+  }
+`;
+
 export function TrackCard({ collectionName, artistName, shortDescription, artworkUrl100, previewUrl }) {
   const [playTrack, setPlayTrack] = useState(false);
   const shortDesc =
     shortDescription && shortDescription.length > 38 ? `${shortDescription.substring(0, 38)}...` : shortDescription;
 
   return (
-    <Card
-      sx={{
-        display: 'flex',
-        margin: '1rem',
-        width: '32rem',
-        justifyContent: 'space-between',
-        ':hover': {
-          boxShadow: 5
-        },
-        transition: 'all .25s linear'
-      }}
-    >
-      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-        <CardContent sx={{ flex: '1 0 auto' }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', pb: 1 }}>
+    <TrackCustomCard>
+      <TrackContentBox>
+        <CardContent>
+          <TrackContentHeaderBox>
             <If condition={!isEmpty(previewUrl)}>
               <IconButton aria-label="play/pause" onClick={() => setPlayTrack(!playTrack)}>
-                <If condition={playTrack} otherwise={<PlayArrowIcon sx={{ height: 32, width: 32 }} />}>
-                  <PauseIcon sx={{ height: 32, width: 32 }} />
+                <If condition={playTrack} otherwise={<TrackPlayIcon />}>
+                  <TrackPauseIcon />
                 </If>
               </IconButton>
             </If>
             <Typography component="div" variant="h5">
-              {collectionName.length > 18 ? `${collectionName.substring(0, 18)}...` : collectionName}
+              {collectionName && collectionName.length > 18 ? `${collectionName.substring(0, 18)}...` : collectionName}
             </Typography>
-          </Box>
+          </TrackContentHeaderBox>
           <Typography variant="subtitle1" color="text.secondary" component="div">
             <If
               condition={!isEmpty(artistName)}
@@ -65,14 +103,14 @@ export function TrackCard({ collectionName, artistName, shortDescription, artwor
             <T data-testid="track_shortdesc" id="track_shortdesc" values={{ desc: shortDesc }} />
           </If>
         </CardContent>
-      </Box>
-      <CardMedia component="img" sx={{ width: 151 }} image={artworkUrl100} alt={collectionName} />
+      </TrackContentBox>
+      <TrackMedia component="img" image={artworkUrl100} alt={collectionName} />
       <If condition={playTrack}>
         <audio autoPlay name="media">
           <source src={previewUrl} />
         </audio>
       </If>
-    </Card>
+    </TrackCustomCard>
   );
 }
 
