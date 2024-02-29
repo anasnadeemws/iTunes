@@ -38,13 +38,13 @@ describe('<TrackCard />', () => {
     expect(getByTestId('collectionName')).toHaveTextContent(collectionName);
   });
 
-  it('should render the repository unavailable messages in case any props are unavailable or have falsy values', () => {
-    const repoUnavailable = translate('repo_name_unavailable');
-    const fullNameUnavailable = translate('repo_full_name_unavailable');
-    const stargazersUnavailable = translate('repo_stars_unavailable');
+  it('should render the track unavailable messages in case any props are unavailable or have falsy values', () => {
+    const collectionNameUnavailable = translate('collection_name_unavailable');
+    const artistNameUnavailable = translate('track_artist_name_unavailable');
+    const shortDescriptionUnavailable = translate('track_shortdesc_unavailable');
     const { getByTestId } = renderWithIntl(<TrackCard />);
-    expect(getByTestId('name-unavailable')).toHaveTextContent(repoUnavailable);
-    expect(getByTestId('fullName-unavailable')).toHaveTextContent(fullNameUnavailable);
-    expect(getByTestId('stargazers-unavaiable')).toHaveTextContent(stargazersUnavailable);
+    expect(getByTestId('collection_name_unavailable')).toHaveTextContent(collectionNameUnavailable);
+    expect(getByTestId('track_artist_name_unavailable')).toHaveTextContent(artistNameUnavailable);
+    expect(getByTestId('track_shortdesc_unavailable')).toHaveTextContent(shortDescriptionUnavailable);
   });
 });
