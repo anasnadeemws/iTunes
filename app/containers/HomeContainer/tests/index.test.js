@@ -7,7 +7,7 @@
 import React from 'react';
 import { Router } from 'react-router';
 import { useHistory } from 'react-router-dom';
-import { fireEvent } from '@testing-library/dom';
+import { fireEvent, waitFor } from '@testing-library/dom';
 import { timeout, renderProvider } from '@utils/testUtils';
 import { HomeContainerTest as HomeContainer, mapDispatchToProps } from '../index';
 import { homeContainerTypes } from '../reducer';
@@ -31,13 +31,17 @@ describe('<HomeContainer /> tests', () => {
     const { getByTestId } = renderProvider(
       <HomeContainer dispatchClearGithubRepos={clearGithubReposSpy} dispatchGithubRepos={getGithubReposSpy} />
     );
-    fireEvent.change(getByTestId('search-bar'), {
-      target: { value: 'a' }
+    await waitFor(() => {
+      fireEvent.change(getByTestId('search-bar'), {
+        target: { value: 'a' }
+      });
     });
     await timeout(500);
     expect(getGithubReposSpy).toBeCalled();
-    fireEvent.change(getByTestId('search-bar'), {
-      target: { value: '' }
+    await waitFor(() => {
+      fireEvent.change(getByTestId('search-bar'), {
+        target: { value: '' }
+      });
     });
     await timeout(500);
     expect(clearGithubReposSpy).toBeCalled();

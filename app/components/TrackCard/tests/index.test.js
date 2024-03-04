@@ -1,7 +1,7 @@
 /**
  *
  * Tests for TrackCard
- *s
+ *
  */
 
 import React from 'react';

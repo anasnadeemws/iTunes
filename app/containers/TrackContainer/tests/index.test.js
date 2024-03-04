@@ -5,13 +5,13 @@
  */
 
 import React from 'react';
-import { Router } from 'react-router';
-import { useHistory } from 'react-router-dom';
+// import { Router } from 'react-router';
+// import { useHistory } from 'react-router-dom';
 import { fireEvent } from '@testing-library/dom';
 import { timeout, renderProvider } from '@utils/testUtils';
 import { TrackContainerTest as TrackContainer, mapDispatchToProps } from '../index';
 import { trackContainerTypes } from '../reducer';
-import { createBrowserHistory } from 'history';
+// import { createBrowserHistory } from 'history';
 import { translate } from '@app/utils/index';
 
 describe('<TrackContainer /> tests', () => {
