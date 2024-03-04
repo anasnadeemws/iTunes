@@ -1,4 +1,4 @@
-import React, { useEffect, memo } from 'react';
+import React, { useEffect, memo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -13,7 +13,6 @@ import { Search as SearchIcon } from '@mui/icons-material';
 import { useHistory } from 'react-router-dom';
 import T from '@components/T';
 import If from '@components/If';
-import For from '@components/For';
 import TrackCard from '@components/TrackCard';
 import colors from '@app/themes/colors';
 import { selectTracksData, selectTracksError, selectTrackName, selectTrackLoading } from './selectors';
@@ -116,6 +115,8 @@ export function TrackContainer({
   const renderTrackList = () => {
     const results = get(tracksData, 'results', []);
     const resultCount = get(tracksData, 'resultCount', 0);
+    const [trackPlaying, setTrackPlaying] = useState('');
+
     return (
       <If condition={!isEmpty(results) || loading}>
         <CustomCard>
@@ -131,11 +132,16 @@ export function TrackContainer({
                   <T id="matching_tracks" values={{ resultCount }} />
                 </div>
               </If>
-              <For
-                of={results}
-                ParentComponent={TrackResultsContainer}
-                renderItem={(item, index) => <TrackCard key={index} {...item} />}
-              />
+              <TrackResultsContainer>
+                {results.map((item, index) => (
+                  <TrackCard key={index} trackPlaying={trackPlaying} setTrackPlaying={setTrackPlaying} {...item} />
+                ))}
+              </TrackResultsContainer>
+              <If condition={!isEmpty(trackPlaying)}>
+                <audio data-testid="audio" name="media" key={trackPlaying} autoPlay>
+                  <source src={trackPlaying} />
+                </audio>
+              </If>
             </>
           </If>
         </CustomCard>

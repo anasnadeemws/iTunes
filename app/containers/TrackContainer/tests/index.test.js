@@ -109,12 +109,6 @@ describe('<TrackContainer /> tests', () => {
     expect(getByTestId('default-message').textContent).toBe(defaultMessage);
   });
 
-  it('should render the data when loading becomes false', () => {
-    const tracksData = { results: [{ trackOne: 'sunflower' }] };
-    const { getByTestId } = renderProvider(<TrackContainer tracksData={tracksData} dispatchItunesTracks={submitSpy} />);
-    expect(getByTestId('for')).toBeInTheDocument();
-  });
-
   it('should render exact number of TrackCards as per resultCount in result', () => {
     const resultCount = 3;
     const tracksData = {
