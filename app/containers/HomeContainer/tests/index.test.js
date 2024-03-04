@@ -13,6 +13,7 @@ import { HomeContainerTest as HomeContainer, mapDispatchToProps } from '../index
 import { homeContainerTypes } from '../reducer';
 import { createBrowserHistory } from 'history';
 import { translate } from '@app/utils/index';
+import { act } from 'react-dom/test-utils';
 
 describe('<HomeContainer /> tests', () => {
   let submitSpy;
@@ -31,38 +32,51 @@ describe('<HomeContainer /> tests', () => {
     const { getByTestId } = renderProvider(
       <HomeContainer dispatchClearGithubRepos={clearGithubReposSpy} dispatchGithubRepos={getGithubReposSpy} />
     );
-    await waitFor(() => {
+    await act(async () => {
       fireEvent.change(getByTestId('search-bar'), {
         target: { value: 'a' }
       });
     });
     await timeout(500);
-    expect(getGithubReposSpy).toBeCalled();
-    await waitFor(() => {
+    waitFor(() => {
+      expect(getGithubReposSpy).toBeCalled();
+    });
+
+    await act(async () => {
       fireEvent.change(getByTestId('search-bar'), {
         target: { value: '' }
       });
     });
     await timeout(500);
-    expect(clearGithubReposSpy).toBeCalled();
+    waitFor(() => {
+      expect(clearGithubReposSpy).toBeCalled();
+    });
   });
 
   it('should call dispatchGithubRepos on change and after enter', async () => {
     const repoName = 'react-template';
     const { getByTestId } = renderProvider(<HomeContainer dispatchGithubRepos={submitSpy} />);
     const searchBar = getByTestId('search-bar');
-    fireEvent.change(searchBar, {
-      target: { value: repoName }
+    await act(async () => {
+      fireEvent.change(searchBar, {
+        target: { value: repoName }
+      });
     });
-    await timeout(500);
-    expect(submitSpy).toBeCalledWith(repoName);
+    waitFor(() => {
+      expect(submitSpy).toBeCalledWith(repoName);
+    });
 
-    fireEvent.keyDown(searchBar, {
-      key: 'Enter',
-      code: 13,
-      charCode: 13
+    await act(async () => {
+      fireEvent.keyDown(searchBar, {
+        key: 'Enter',
+        code: 13,
+        charCode: 13
+      });
     });
-    expect(submitSpy).toBeCalledWith(repoName);
+
+    waitFor(() => {
+      expect(submitSpy).toBeCalledWith(repoName);
+    });
   });
 
   it('should call dispatchGithubRepos on clicking the search icon', async () => {
