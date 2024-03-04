@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Card } from '@mui/material';
 import styled from '@emotion/styled';
@@ -67,8 +67,37 @@ const TrackPlayIcon = styled(PlayArrowIcon)`
   }
 `;
 
-export function TrackCard({ collectionName, artistName, shortDescription, artworkUrl100, previewUrl }) {
+export function TrackCard({
+  trackPlaying,
+  setTrackPlaying,
+  collectionName,
+  artistName,
+  shortDescription,
+  artworkUrl100,
+  previewUrl
+}) {
   const [playTrack, setPlayTrack] = useState(false);
+
+  // Update trackPlaying state when playTrack is toggled
+  useEffect(() => {
+    if (playTrack) {
+      setTrackPlaying(previewUrl);
+    } else {
+      if (trackPlaying === previewUrl) {
+        setTrackPlaying('');
+      }
+    }
+  }, [playTrack]);
+
+  // Pause track when another track is played
+  useEffect(() => {
+    if (!trackPlaying) {
+      setPlayTrack(false);
+    }
+    if (trackPlaying !== previewUrl) {
+      setPlayTrack(false);
+    }
+  }, [trackPlaying]);
 
   // Helpers
   const truncateWord = (word, truncateLen) => {
@@ -116,16 +145,13 @@ export function TrackCard({ collectionName, artistName, shortDescription, artwor
       <If condition={!isEmpty(artworkUrl100)}>
         <TrackMedia component="img" image={artworkUrl100} alt="Poster unavailable" />
       </If>
-      <If condition={playTrack}>
-        <audio autoPlay name="media">
-          <source src={previewUrl} />
-        </audio>
-      </If>
     </TrackCustomCard>
   );
 }
 
 TrackCard.propTypes = {
+  trackPlaying: PropTypes.string,
+  setTrackPlaying: PropTypes.func,
   artistName: PropTypes.string,
   artworkUrl100: PropTypes.string,
   collectionName: PropTypes.string,
