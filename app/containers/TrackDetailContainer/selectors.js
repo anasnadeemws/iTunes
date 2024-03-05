@@ -16,14 +16,11 @@ export const selectTrackDetailContainerDomain = (state) => state.trackDetailCont
  * Default selector used by trackDetailContainer
  */
 
-export const selectTracksData = () =>
-  createSelector(selectTrackDetailContainerDomain, (substate) => get(substate, 'tracksData'));
+export const selectTrackDetailData = () =>
+  createSelector(selectTrackDetailContainerDomain, (substate) => get(substate, 'trackData'));
 
-export const selectTracksError = () =>
-  createSelector(selectTrackDetailContainerDomain, (substate) => get(substate, 'tracksError'));
+export const selectTrackError = () =>
+  createSelector(selectTrackDetailContainerDomain, (substate) => get(substate, 'trackError'));
 
-export const selectTrackName = () =>
-  createSelector(selectTrackDetailContainerDomain, (substate) => get(substate, 'trackName'));
-
-export const selectTrackLoading = () =>
+export const selectTrackDetailLoading = () =>
   createSelector(selectTrackDetailContainerDomain, (substate) => get(substate, 'loading'));

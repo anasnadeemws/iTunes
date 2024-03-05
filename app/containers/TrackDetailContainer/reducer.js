@@ -12,7 +12,7 @@ export const { Types: trackDetailContainerTypes, Creators: trackDetailContainerC
   successGetTrackDetail: ['data'],
   failureGetTrackDetail: ['error']
 });
-export const initialState = { trackId: null, trackData: {}, trackError: null, loading: false };
+export const initialState = { trackId: null, trackDetailData: {}, trackError: null, trackDetailLoading: false };
 
 /* eslint-disable default-case, no-param-reassign */
 export const trackDetailContainerReducer = (state = initialState, action) =>
@@ -20,15 +20,15 @@ export const trackDetailContainerReducer = (state = initialState, action) =>
     switch (action.type) {
       case trackDetailContainerTypes.REQUEST_GET_TRACK_DETAIL:
         draft.trackId = action.trackId;
-        draft.loading = true;
+        draft.trackDetailLoading = true;
         break;
       case trackDetailContainerTypes.SUCCESS_GET_TRACK_DETAIL:
-        draft.trackData = action.data;
-        draft.loading = false;
+        draft.trackDetailData = action.data;
+        draft.trackDetailLoading = false;
         break;
       case trackDetailContainerTypes.FAILURE_GET_TRACK_DETAIL:
         draft.trackError = get(action.error, 'message', 'something_went_wrong');
-        draft.loading = false;
+        draft.trackDetailLoading = false;
         break;
     }
   });
