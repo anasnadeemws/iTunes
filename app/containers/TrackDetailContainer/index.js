@@ -4,15 +4,34 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { useParams } from 'react-router-dom';
-import trackDetailContainerSaga from './saga';
-import { selectTrackDetailData, selectTrackError, selectTrackDetailLoading } from './selectors';
+import isEmpty from 'lodash/isEmpty';
+import styled from '@emotion/styled';
 import { trackDetailContainerCreators } from './reducer';
 import { injectSaga } from 'redux-injectors';
-import { Container, Skeleton } from '@mui/material';
+import { Card, CardHeader, Container, Divider, Skeleton } from '@mui/material';
 import TrackCard from '@components/TrackCard';
 import If from '@components/If';
+import T from '@components/T';
 import get from 'lodash/get';
-import isEmpty from 'lodash/isEmpty';
+import trackDetailContainerSaga from './saga';
+import { selectTrackDetailData, selectTrackError, selectTrackDetailLoading } from './selectors';
+import { translate } from '@app/utils/index';
+
+// Custom Styling
+const CustomCard = styled(Card)`
+  && {
+    margin: 1.25rem 0;
+    padding: 1rem;
+    max-width: ${(props) => props.maxwidth};
+    color: ${(props) => props.color};
+    ${(props) => props.color && `color: ${props.color}`};
+  }
+`;
+const CustomCardHeader = styled(CardHeader)`
+  && {
+    padding: 0;
+  }
+`;
 
 export const TrackDetailContainer = ({
   trackDetailData,
@@ -59,7 +78,7 @@ export const TrackDetailContainer = ({
       trackDetailError = trackError;
     }
     return (
-      !loading &&
+      !trackDetailLoading &&
       trackDetailError && (
         <CustomCard color={trackDetailError ? 'red' : 'grey'}>
           <CustomCardHeader title={translate('track_list')} />

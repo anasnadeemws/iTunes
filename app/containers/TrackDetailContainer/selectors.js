@@ -23,4 +23,4 @@ export const selectTrackError = () =>
   createSelector(selectTrackDetailContainerDomain, (substate) => get(substate, 'trackError'));
 
 export const selectTrackDetailLoading = () =>
-  createSelector(selectTrackDetailContainerDomain, (substate) => get(substate, 'loading'));
+  createSelector(selectTrackDetailContainerDomain, (substate) => get(substate, 'trackDetailLoading'));

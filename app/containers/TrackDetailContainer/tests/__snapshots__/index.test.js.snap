@@ -2,6 +2,54 @@
 
 exports[`<TrackDetailContainer /> tests should render and match the snapshot 1`] = `
 <body>
-
+  <div>
+    <div
+      class="MuiContainer-root MuiContainer-maxWidthLg css-psxadm-MuiContainer-root"
+    >
+      <div
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root e12nrugs5 css-g118n2-MuiPaper-root-MuiCard-root"
+        data-testid="track-card"
+      >
+        <div
+          class="e12nrugs4 MuiBox-root css-1ahrg9s"
+        >
+          <div
+            class="e12nrugs2 MuiBox-root css-yhs9f2"
+          >
+            <a
+              href="/tracks/undefined"
+            >
+              <div
+                class="MuiTypography-root MuiTypography-h5 css-41an0y-MuiTypography-root"
+              >
+                <p
+                  class="css-lh9t18 egtqi0h0"
+                  data-testid="collection_name_unavailable"
+                >
+                  Track name is unavailable
+                </p>
+              </div>
+            </a>
+          </div>
+          <div
+            class="MuiTypography-root MuiTypography-subtitle1 css-ecpxie-MuiTypography-root"
+          >
+            <p
+              class="css-lh9t18 egtqi0h0"
+              data-testid="track_artist_name_unavailable"
+            >
+              Artist name is unavailable
+            </p>
+          </div>
+          <p
+            class="css-lh9t18 egtqi0h0"
+            data-testid="track_shortdesc_unavailable"
+          >
+            Description unavaiable
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 `;

@@ -1,55 +1,47 @@
 import {
-  selectTrackContainerDomain,
-  selectTrackName,
-  selectTracksData,
-  selectTracksError,
-  selectTrackLoading
+  selectTrackDetailContainerDomain,
+  selectTrackDetailData,
+  selectTrackError,
+  selectTrackDetailLoading
 } from '../selectors';
 import { initialState } from '../reducer';
 
-describe('TrackContainer selector tests', () => {
+describe('TrackDetailContainer selector tests', () => {
   let mockedState;
-  let trackName;
-  let tracksData;
-  let tracksError;
-  let loading;
+  let trackDetailData;
+  let trackError;
+  let trackDetailLoading;
 
   beforeEach(() => {
-    trackName = 'mac';
-    tracksData = { resultCount: 1, results: [{ trackName }] };
-    tracksError = 'There was some error while fetching the tracksitory details';
+    trackDetailData = { resultCount: 1, results: [] };
+    trackError = 'There was some error while fetching the track details';
 
     mockedState = {
-      trackContainer: {
-        trackName,
-        tracksData,
-        tracksError,
-        loading
+      trackDetailContainer: {
+        trackDetailData,
+        trackError,
+        trackDetailLoading
       }
     };
   });
-  it('should select the trackName', () => {
-    const trackSelector = selectTrackName();
-    expect(trackSelector(mockedState)).toEqual(trackName);
+
+  it('should select trackDetailData', () => {
+    const tracksDataSelector = selectTrackDetailData();
+    expect(tracksDataSelector(mockedState)).toEqual(trackDetailData);
   });
 
-  it('should select tracksData', () => {
-    const tracksDataSelector = selectTracksData();
-    expect(tracksDataSelector(mockedState)).toEqual(tracksData);
+  it('should select the trackError', () => {
+    const tracksErrorSelector = selectTrackError();
+    expect(tracksErrorSelector(mockedState)).toEqual(trackError);
   });
 
-  it('should select the tracksError', () => {
-    const tracksErrorSelector = selectTracksError();
-    expect(tracksErrorSelector(mockedState)).toEqual(tracksError);
-  });
-
-  it('should select the loading', () => {
-    const tracksLoadingSelector = selectTrackLoading();
-    expect(tracksLoadingSelector(mockedState)).toEqual(loading);
+  it('should select the trackDetailLoading', () => {
+    const tracksLoadingSelector = selectTrackDetailLoading();
+    expect(tracksLoadingSelector(mockedState)).toEqual(trackDetailLoading);
   });
 
   it('should select the global state', () => {
-    const selector = selectTrackContainerDomain(initialState);
+    const selector = selectTrackDetailContainerDomain(initialState);
     expect(selector).toEqual(initialState);
   });
 });

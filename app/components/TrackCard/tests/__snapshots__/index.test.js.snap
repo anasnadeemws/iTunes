@@ -13,16 +13,20 @@ exports[`<TrackCard /> should render and match the snapshot 1`] = `
         <div
           class="e12nrugs2 MuiBox-root css-yhs9f2"
         >
-          <div
-            class="MuiTypography-root MuiTypography-h5 css-ag7rrr-MuiTypography-root"
+          <a
+            href="/tracks/undefined"
           >
-            <p
-              class="css-lh9t18 egtqi0h0"
-              data-testid="collection_name_unavailable"
+            <div
+              class="MuiTypography-root MuiTypography-h5 css-41an0y-MuiTypography-root"
             >
-              Track name is unavailable
-            </p>
-          </div>
+              <p
+                class="css-lh9t18 egtqi0h0"
+                data-testid="collection_name_unavailable"
+              >
+                Track name is unavailable
+              </p>
+            </div>
+          </a>
         </div>
         <div
           class="MuiTypography-root MuiTypography-subtitle1 css-ecpxie-MuiTypography-root"
