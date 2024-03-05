@@ -5,14 +5,14 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { useParams } from 'react-router-dom';
 import trackDetailContainerSaga from './saga';
-import { selectTrackDetailData, selectTrackId, selectTrackError, selectTrackDetailLoading } from './selectors';
+import { selectTrackDetailData, selectTrackError, selectTrackDetailLoading } from './selectors';
 import { trackDetailContainerCreators } from './reducer';
 import { injectSaga } from 'redux-injectors';
 import { Card, IconButton, Skeleton, InputAdornment, OutlinedInput, CardHeader, Divider } from '@mui/material';
 
 export const TrackDetailContainer = ({ trackDetailData, trackError, trackDetailLoading, dispatchTrackDetail }) => {
   const { trackId } = useParams();
-
+  console.log('trackId', trackId);
   return <div>TrackDetailContainer {trackId} </div>;
 };
 

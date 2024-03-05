@@ -16,7 +16,7 @@ export default {
     exact: true
   },
   track: {
-    route: '/track:trackid',
+    route: '/tracks/:trackId',
     props: {
       maxwidth: 500,
       padding: 20

@@ -17,6 +17,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
+import { Link } from 'react-router-dom';
 
 const TrackCustomCard = styled(Card)`
   && {
@@ -70,6 +71,7 @@ const TrackPlayIcon = styled(PlayArrowIcon)`
 export function TrackCard({
   trackPlaying,
   setTrackPlaying,
+  collectionId,
   collectionName,
   artistName,
   shortDescription,
@@ -108,6 +110,7 @@ export function TrackCard({
   };
 
   return (
+    <Link to={`/tracks/${collectionId}`}>
     <TrackCustomCard data-testid="track-card">
       <TrackContentBox>
         <TrackContentHeaderBox>
@@ -146,12 +149,14 @@ export function TrackCard({
         <TrackMedia component="img" image={artworkUrl100} alt="Poster unavailable" />
       </If>
     </TrackCustomCard>
+    </Link>
   );
 }
 
 TrackCard.propTypes = {
   trackPlaying: PropTypes.string,
   setTrackPlaying: PropTypes.func,
+  collectionId: PropTypes.number,
   artistName: PropTypes.string,
   artworkUrl100: PropTypes.string,
   collectionName: PropTypes.string,
