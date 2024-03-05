@@ -49,5 +49,4 @@ describe('<TrackDetailContainer /> tests', () => {
   //   expect(getByTestId('error-message')).toBeInTheDocument();
   //   expect(getByTestId('error-message').textContent).toBe(defaultError);
   // });
-
 });

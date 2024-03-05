@@ -15,7 +15,9 @@ describe('TrackDetailContainer saga tests', () => {
   let getTracksGenerator = getTrackDetail({ trackId });
 
   it('should start task to watch for REQUEST_GET_TRACK_DETAIL action', () => {
-    expect(generator.next().value).toEqual(takeLatest(trackDetailContainerTypes.REQUEST_GET_TRACK_DETAIL, getTrackDetail));
+    expect(generator.next().value).toEqual(
+      takeLatest(trackDetailContainerTypes.REQUEST_GET_TRACK_DETAIL, getTrackDetail)
+    );
   });
 
   it('should ensure that the action FAILURE_GET_TRACK_DETAIL is dispatched when the api call fails', () => {

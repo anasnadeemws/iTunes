@@ -110,50 +110,46 @@ export function TrackCard({
   };
 
   return (
-      <TrackCustomCard data-testid="track-card">
-        <TrackContentBox>
-          <TrackContentHeaderBox>
-            <If condition={!isEmpty(previewUrl)}>
-              <IconButton aria-label="play/pause" onClick={() => setPlayTrack(!playTrack)}>
-                <If condition={playTrack} otherwise={<TrackPlayIcon />}>
-                  <TrackPauseIcon />
-                </If>
-              </IconButton>
-            </If>
-            <Link to={`/tracks/${collectionId}`}>
-              <Typography component="div" variant="h5" color="text.secondary">
-                <If
-                  condition={!isEmpty(collectionName)}
-                  otherwise={<T data-testid="collection_name_unavailable" id="collection_name_unavailable" />}
-                >
-                    <T data-testid="collectionName" id="collection_name" values={{ collectionName: collectionName }} />
-                </If>
-              </Typography>
-            </Link>
-          </TrackContentHeaderBox>
-          <Typography variant="subtitle1" color="text.secondary" component="div">
-            <If
-              condition={!isEmpty(artistName)}
-              otherwise={<T data-testid="track_artist_name_unavailable" id="track_artist_name_unavailable" />}
-            >
-              <T data-testid="artistName" id="track_artist_name" values={{ artistName: artistName }} />
-            </If>
-          </Typography>
-          <If
-            condition={!isEmpty(shortDescription)}
-            otherwise={<T data-testid="track_shortdesc_unavailable" id="track_shortdesc_unavailable" />}
-          >
-            <T
-              data-testid="track_shortdesc"
-              id="track_shortdesc"
-              values={{ desc: truncateWord(shortDescription, 38) }}
-            />
+    <TrackCustomCard data-testid="track-card">
+      <TrackContentBox>
+        <TrackContentHeaderBox>
+          <If condition={!isEmpty(previewUrl)}>
+            <IconButton aria-label="play/pause" onClick={() => setPlayTrack(!playTrack)}>
+              <If condition={playTrack} otherwise={<TrackPlayIcon />}>
+                <TrackPauseIcon />
+              </If>
+            </IconButton>
           </If>
-        </TrackContentBox>
-        <If condition={!isEmpty(artworkUrl100)}>
-          <TrackMedia component="img" image={artworkUrl100} alt="Poster unavailable" />
+          <Link to={`/tracks/${collectionId}`}>
+            <Typography component="div" variant="h5" color="text.secondary">
+              <If
+                condition={!isEmpty(collectionName)}
+                otherwise={<T data-testid="collection_name_unavailable" id="collection_name_unavailable" />}
+              >
+                <T data-testid="collectionName" id="collection_name" values={{ collectionName: collectionName }} />
+              </If>
+            </Typography>
+          </Link>
+        </TrackContentHeaderBox>
+        <Typography variant="subtitle1" color="text.secondary" component="div">
+          <If
+            condition={!isEmpty(artistName)}
+            otherwise={<T data-testid="track_artist_name_unavailable" id="track_artist_name_unavailable" />}
+          >
+            <T data-testid="artistName" id="track_artist_name" values={{ artistName: artistName }} />
+          </If>
+        </Typography>
+        <If
+          condition={!isEmpty(shortDescription)}
+          otherwise={<T data-testid="track_shortdesc_unavailable" id="track_shortdesc_unavailable" />}
+        >
+          <T data-testid="track_shortdesc" id="track_shortdesc" values={{ desc: truncateWord(shortDescription, 38) }} />
         </If>
-      </TrackCustomCard>
+      </TrackContentBox>
+      <If condition={!isEmpty(artworkUrl100)}>
+        <TrackMedia component="img" image={artworkUrl100} alt="Poster unavailable" />
+      </If>
+    </TrackCustomCard>
   );
 }
 
