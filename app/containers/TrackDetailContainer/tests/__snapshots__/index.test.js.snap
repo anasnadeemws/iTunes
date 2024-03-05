@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TrackDetailContainer /> tests should render and match the snapshot 1`] = `
+<body>
+
+</body>
+`;

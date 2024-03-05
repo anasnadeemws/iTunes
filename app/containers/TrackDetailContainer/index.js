@@ -53,11 +53,31 @@ export const TrackDetailContainer = ({
     );
   };
 
+  const renderErrorState = () => {
+    let trackDetailError;
+    if (trackError) {
+      trackDetailError = trackError;
+    }
+    return (
+      !loading &&
+      trackDetailError && (
+        <CustomCard color={trackDetailError ? 'red' : 'grey'}>
+          <CustomCardHeader title={translate('track_list')} />
+          <Divider sx={{ mb: 1.25 }} light />
+          <If condition={trackDetailError} otherwise={<T data-testid="default-message" id={trackDetailError} />}>
+            <T data-testid="error-message" text={trackDetailError} />
+          </If>
+        </CustomCard>
+      )
+    );
+  };
+
   return (
     <Container padding={padding}>
       <If condition={!trackDetailLoading} otherwise={renderSkeleton()}>
         {renderTrackDetail()}
       </If>
+      {renderErrorState()}
     </Container>
   );
 };
@@ -99,3 +119,5 @@ export default compose(
   memo,
   injectSaga({ key: 'trackDetailContainer', saga: trackDetailContainerSaga })
 )(TrackDetailContainer);
+
+export const TrackDetailContainerTest = compose()(TrackDetailContainer);
