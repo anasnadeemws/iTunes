@@ -17,7 +17,7 @@ export const selectTrackDetailContainerDomain = (state) => state.trackDetailCont
  */
 
 export const selectTrackDetailData = () =>
-  createSelector(selectTrackDetailContainerDomain, (substate) => get(substate, 'trackData'));
+  createSelector(selectTrackDetailContainerDomain, (substate) => get(substate, 'trackDetailData'));
 
 export const selectTrackError = () =>
   createSelector(selectTrackDetailContainerDomain, (substate) => get(substate, 'trackError'));
