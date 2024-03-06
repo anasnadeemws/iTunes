@@ -6,18 +6,16 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 import { getTrack } from '@services/trackApi';
 import { apiResponseGenerator } from '@utils/testUtils';
-import trackDetailContainerSaga, { getTrackDetail } from '../saga';
-import { trackDetailContainerTypes } from '../reducer';
+import trackDetailSaga, { getTrackDetail } from '../saga';
+import { trackDetailTypes } from '../reducer';
 
 describe('TrackDetailContainer saga tests', () => {
-  const generator = trackDetailContainerSaga();
+  const generator = trackDetailSaga();
   const trackId = 12323;
   let getTracksGenerator = getTrackDetail({ trackId });
 
   it('should start task to watch for REQUEST_GET_TRACK_DETAIL action', () => {
-    expect(generator.next().value).toEqual(
-      takeLatest(trackDetailContainerTypes.REQUEST_GET_TRACK_DETAIL, getTrackDetail)
-    );
+    expect(generator.next().value).toEqual(takeLatest(trackDetailTypes.REQUEST_GET_TRACK_DETAIL, getTrackDetail));
   });
 
   it('should ensure that the action FAILURE_GET_TRACK_DETAIL is dispatched when the api call fails', () => {
@@ -28,7 +26,7 @@ describe('TrackDetailContainer saga tests', () => {
     };
     expect(getTracksGenerator.next(apiResponseGenerator(false, errorResponse)).value).toEqual(
       put({
-        type: trackDetailContainerTypes.FAILURE_GET_TRACK_DETAIL,
+        type: trackDetailTypes.FAILURE_GET_TRACK_DETAIL,
         error: errorResponse
       })
     );
@@ -44,7 +42,7 @@ describe('TrackDetailContainer saga tests', () => {
     };
     expect(getTracksGenerator.next(apiResponseGenerator(true, tracksResponse)).value).toEqual(
       put({
-        type: trackDetailContainerTypes.SUCCESS_GET_TRACK_DETAIL,
+        type: trackDetailTypes.SUCCESS_GET_TRACK_DETAIL,
         data: tracksResponse
       })
     );

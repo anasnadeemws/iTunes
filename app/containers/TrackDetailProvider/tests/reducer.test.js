@@ -1,4 +1,4 @@
-import { trackDetailContainerReducer, initialState, trackDetailContainerTypes } from '../reducer';
+import { trackDetailReducer, initialState, trackDetailTypes } from '../reducer';
 
 /* eslint-disable default-case, no-param-reassign */
 describe('TrackDetailContainer reducer tests', () => {
@@ -8,15 +8,15 @@ describe('TrackDetailContainer reducer tests', () => {
   });
 
   it('should return the initial state', () => {
-    expect(trackDetailContainerReducer(undefined, {})).toEqual(state);
+    expect(trackDetailReducer(undefined, {})).toEqual(state);
   });
 
   it('should return the initial state when an action of type REQUEST_GET_TRACK_DETAIL is dispatched', () => {
     const trackId = 'Sunflower';
     const expectedResult = { ...state, trackId, trackDetailLoading: true };
     expect(
-      trackDetailContainerReducer(state, {
-        type: trackDetailContainerTypes.REQUEST_GET_TRACK_DETAIL,
+      trackDetailReducer(state, {
+        type: trackDetailTypes.REQUEST_GET_TRACK_DETAIL,
         trackId
       })
     ).toEqual(expectedResult);
@@ -26,8 +26,8 @@ describe('TrackDetailContainer reducer tests', () => {
     const data = { artistName: 'Post Malone' };
     const expectedResult = { ...state, trackDetailData: data, trackDetailLoading: false };
     expect(
-      trackDetailContainerReducer(state, {
-        type: trackDetailContainerTypes.SUCCESS_GET_TRACK_DETAIL,
+      trackDetailReducer(state, {
+        type: trackDetailTypes.SUCCESS_GET_TRACK_DETAIL,
         data
       })
     ).toEqual(expectedResult);
@@ -37,8 +37,8 @@ describe('TrackDetailContainer reducer tests', () => {
     const error = 'something_went_wrong';
     const expectedResult = { ...state, trackError: error, trackDetailLoading: false };
     expect(
-      trackDetailContainerReducer(state, {
-        type: trackDetailContainerTypes.FAILURE_GET_TRACK_DETAIL,
+      trackDetailReducer(state, {
+        type: trackDetailTypes.FAILURE_GET_TRACK_DETAIL,
         error
       })
     ).toEqual(expectedResult);

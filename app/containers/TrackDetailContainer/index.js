@@ -6,16 +6,16 @@ import { compose } from 'redux';
 import { useParams } from 'react-router-dom';
 import isEmpty from 'lodash/isEmpty';
 import styled from '@emotion/styled';
-import { trackDetailContainerCreators } from './reducer';
 import { injectSaga } from 'redux-injectors';
 import { Card, CardHeader, Container, Divider, Skeleton } from '@mui/material';
 import TrackCard from '@components/TrackCard';
 import If from '@components/If';
 import T from '@components/T';
 import get from 'lodash/get';
-import trackDetailContainerSaga from './saga';
-import { selectTrackDetailData, selectTrackError, selectTrackDetailLoading } from './selectors';
 import { translate } from '@app/utils/index';
+import trackDetailSaga from '../TrackDetailProvider/saga';
+import { selectTrackDetailData, selectTrackError, selectTrackDetailLoading } from '../TrackDetailProvider/selectors';
+import { trackDetailCreators } from '../TrackDetailProvider/reducer';
 
 // Custom Styling
 const CustomCard = styled(Card)`
@@ -125,7 +125,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 export function mapDispatchToProps(dispatch) {
-  const { requestGetTrackDetail } = trackDetailContainerCreators;
+  const { requestGetTrackDetail } = trackDetailCreators;
   return {
     dispatchTrackDetail: (trackId) => dispatch(requestGetTrackDetail(trackId))
   };
@@ -136,7 +136,7 @@ const withConnect = connect(mapStateToProps, mapDispatchToProps);
 export default compose(
   withConnect,
   memo,
-  injectSaga({ key: 'trackDetailContainer', saga: trackDetailContainerSaga })
+  injectSaga({ key: 'trackDetailContainer', saga: trackDetailSaga })
 )(TrackDetailContainer);
 
 export const TrackDetailContainerTest = compose()(TrackDetailContainer);

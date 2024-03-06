@@ -6,7 +6,7 @@ import { initialState } from './reducer';
  * Direct selector to the trackDetailContainer state domain
  */
 
-export const selectTrackDetailContainerDomain = (state) => state.trackDetailContainer || initialState;
+export const selectTrackDetailDomain = (state) => state.trackDetailContainer || initialState;
 
 /**
  * Other specific selectors
@@ -17,10 +17,10 @@ export const selectTrackDetailContainerDomain = (state) => state.trackDetailCont
  */
 
 export const selectTrackDetailData = () =>
-  createSelector(selectTrackDetailContainerDomain, (substate) => get(substate, 'trackDetailData'));
+  createSelector(selectTrackDetailDomain, (substate) => get(substate, 'trackDetailData'));
 
 export const selectTrackError = () =>
-  createSelector(selectTrackDetailContainerDomain, (substate) => get(substate, 'trackError'));
+  createSelector(selectTrackDetailDomain, (substate) => get(substate, 'trackError'));
 
 export const selectTrackDetailLoading = () =>
-  createSelector(selectTrackDetailContainerDomain, (substate) => get(substate, 'trackDetailLoading'));
+  createSelector(selectTrackDetailDomain, (substate) => get(substate, 'trackDetailLoading'));
