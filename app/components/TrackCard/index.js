@@ -17,6 +17,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
+import { Link } from 'react-router-dom';
 
 const TrackCustomCard = styled(Card)`
   && {
@@ -70,6 +71,7 @@ const TrackPlayIcon = styled(PlayArrowIcon)`
 export function TrackCard({
   trackPlaying,
   setTrackPlaying,
+  collectionId,
   collectionName,
   artistName,
   shortDescription,
@@ -118,14 +120,16 @@ export function TrackCard({
               </If>
             </IconButton>
           </If>
-          <Typography component="div" variant="h5">
-            <If
-              condition={!isEmpty(collectionName)}
-              otherwise={<T data-testid="collection_name_unavailable" id="collection_name_unavailable" />}
-            >
-              <T data-testid="collectionName" id="collection_name" values={{ collectionName: collectionName }} />
-            </If>
-          </Typography>
+          <Link to={`/tracks/${collectionId}`}>
+            <Typography component="div" variant="h5" color="text.secondary">
+              <If
+                condition={!isEmpty(collectionName)}
+                otherwise={<T data-testid="collection_name_unavailable" id="collection_name_unavailable" />}
+              >
+                <T data-testid="collectionName" id="collection_name" values={{ collectionName: collectionName }} />
+              </If>
+            </Typography>
+          </Link>
         </TrackContentHeaderBox>
         <Typography variant="subtitle1" color="text.secondary" component="div">
           <If
@@ -152,6 +156,7 @@ export function TrackCard({
 TrackCard.propTypes = {
   trackPlaying: PropTypes.string,
   setTrackPlaying: PropTypes.func,
+  collectionId: PropTypes.number,
   artistName: PropTypes.string,
   artworkUrl100: PropTypes.string,
   collectionName: PropTypes.string,
