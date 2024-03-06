@@ -16,6 +16,7 @@ import { translate } from '@app/utils/index';
 import trackDetailSaga from '../TrackDetailProvider/saga';
 import { selectTrackDetailData, selectTrackError, selectTrackDetailLoading } from '../TrackDetailProvider/selectors';
 import { trackDetailCreators } from '../TrackDetailProvider/reducer';
+import { selectTracksData } from '../TrackContainer/selectors';
 
 // Custom Styling
 const CustomCard = styled(Card)`
@@ -34,16 +35,27 @@ const CustomCardHeader = styled(CardHeader)`
 `;
 
 export const TrackDetailContainer = ({
+  tracksData,
   trackDetailData,
   trackError,
   trackDetailLoading,
   dispatchTrackDetail,
+  dispatchTrackDetailData,
   padding
 }) => {
   const { trackId } = useParams();
 
   useEffect(() => {
-    dispatchTrackDetail(trackId);
+    const trackDataResults = get(tracksData, 'results', []);
+    const data = trackDataResults.find((track) => {
+      return track.collectionId == trackId;
+    });
+    if (isEmpty(data)) {
+      dispatchTrackDetail(trackId);
+    } else {
+      dispatchTrackDetailData({ results: [data] });
+    }
+    // dispatchTrackDetail(trackId);
   }, []);
 
   const renderSkeleton = () => {
@@ -102,6 +114,10 @@ export const TrackDetailContainer = ({
 };
 
 TrackDetailContainer.propTypes = {
+  tracksData: PropTypes.shape({
+    resultCount: PropTypes.number,
+    results: PropTypes.array
+  }),
   trackDetailData: PropTypes.shape({
     resultCount: PropTypes.number,
     results: PropTypes.array
@@ -109,6 +125,7 @@ TrackDetailContainer.propTypes = {
   trackError: PropTypes.string,
   trackDetailLoading: PropTypes.bool,
   dispatchTrackDetail: PropTypes.func,
+  dispatchTrackDetailData: PropTypes.func,
   padding: PropTypes.number
 };
 
@@ -119,15 +136,17 @@ TrackDetailContainer.defaultProps = {
 };
 
 const mapStateToProps = createStructuredSelector({
+  tracksData: selectTracksData(),
   trackDetailData: selectTrackDetailData(),
   trackError: selectTrackError(),
   trackDetailLoading: selectTrackDetailLoading()
 });
 
 export function mapDispatchToProps(dispatch) {
-  const { requestGetTrackDetail } = trackDetailCreators;
+  const { requestGetTrackDetail, successGetTrackDetail } = trackDetailCreators;
   return {
-    dispatchTrackDetail: (trackId) => dispatch(requestGetTrackDetail(trackId))
+    dispatchTrackDetail: (trackId) => dispatch(requestGetTrackDetail(trackId)),
+    dispatchTrackDetailData: (data) => dispatch(successGetTrackDetail(data))
   };
 }
 
