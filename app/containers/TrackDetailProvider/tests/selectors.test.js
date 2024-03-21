@@ -1,5 +1,5 @@
 import {
-  selectTrackDetailContainerDomain,
+  selectTrackDetailDomain,
   selectTrackDetailData,
   selectTrackError,
   selectTrackDetailLoading
@@ -41,7 +41,7 @@ describe('TrackDetailContainer selector tests', () => {
   });
 
   it('should select the global state', () => {
-    const selector = selectTrackDetailContainerDomain(initialState);
+    const selector = selectTrackDetailDomain(initialState);
     expect(selector).toEqual(initialState);
   });
 });

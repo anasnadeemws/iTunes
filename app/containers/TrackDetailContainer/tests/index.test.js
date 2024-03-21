@@ -7,8 +7,8 @@
 import React from 'react';
 import { renderProvider } from '@utils/testUtils';
 import { TrackDetailContainerTest as TrackDetailContainer, mapDispatchToProps } from '../index';
-import { trackDetailContainerTypes } from '../reducer';
 import { translate } from '@app/utils/index';
+import { trackDetailTypes } from '@app/containers/TrackDetailProvider/reducer';
 
 describe('<TrackDetailContainer /> tests', () => {
   let submitSpy;
@@ -25,7 +25,7 @@ describe('<TrackDetailContainer /> tests', () => {
     const dispatchTracksSearchSpy = jest.fn();
     const trackId = 12323;
     const actions = {
-      dispatchTrackDetail: { trackId, type: trackDetailContainerTypes.REQUEST_GET_TRACK_DETAIL }
+      dispatchTrackDetail: { trackId, type: trackDetailTypes.REQUEST_GET_TRACK_DETAIL }
     };
 
     const props = mapDispatchToProps(dispatchTracksSearchSpy);
